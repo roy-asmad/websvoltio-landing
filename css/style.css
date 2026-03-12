@@ -123,19 +123,120 @@ p { font-size: 1rem; color: var(--text-muted); }
   font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem auto; 
 }
 
-/* ================= PORTAFOLIO ================= */
-.flex-row { display: flex; flex-direction: column; gap: 2rem; padding: 0; overflow: hidden; }
-.portfolio-img { background: #111; min-height: 250px; display: flex; align-items: center; justify-content: center; }
-.portfolio-info { padding: 2.5rem; }
-@media (min-width: 768px) {
-  .flex-row { flex-direction: row; align-items: center; }
-  .portfolio-img { width: 45%; height: 100%; min-height: 350px; }
-  .portfolio-info { width: 55%; padding-right: 3rem; }
+/* ================= PORTAFOLIO & CARRUSEL ================= */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
+
+/* Efecto de desvanecimiento en los bordes */
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+.carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-color) 10%, transparent);
+}
+.carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-color) 10%, transparent);
+}
+
+/* Contenedor del carrusel deslizante */
 .portfolio-container {
   display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 80px 2rem 80px; /* Espacio para que las tarjetas no choquen con las flechas */
+  scrollbar-width: none;
+}
+.portfolio-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Botones de navegación (Flechas) */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--accent-color);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+.carousel-btn:hover {
+  background: rgba(0, 229, 255, 0.1);
+  transform: translateY(-50%) scale(1.1);
+}
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* Tarjetas en formato Vertical */
+.portfolio-card-compact { 
+  display: flex;
   flex-direction: column;
-  gap: 3rem;
+  padding: 0; 
+}
+.portfolio-card-compact .portfolio-info { 
+  padding: 2rem; 
+  flex-grow: 1; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+}
+.portfolio-card-compact .portfolio-img { 
+  width: 100%; 
+  min-height: 220px; 
+  border-radius: 24px 24px 0 0; 
+  background: #111; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.carousel-item {
+  min-width: 85%; /* En móviles ocupa casi toda la pantalla */
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+/* Ajustes para PC */
+@media (min-width: 768px) {
+  .carousel-item {
+    min-width: 350px; /* Ancho fijo y vertical para PC */
+    max-width: 380px;
+  }
+}
+
+/* Ocultar botones en móvil y ajustar desvanecimiento */
+@media (max-width: 768px) {
+  .carousel-btn { display: none; }
+  .carousel-wrapper::before, .carousel-wrapper::after { width: 40px; }
+  .portfolio-container { padding: 1rem 20px 2rem 20px; }
+}
+
+@keyframes spin { 
+  100% { transform: rotate(360deg); } 
 }
 
 /* ================= ANIMACIONES ================= */
@@ -191,7 +292,7 @@ p { font-size: 1rem; color: var(--text-muted); }
   .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
   .glass-card h3 { font-size: 1.3rem; }
   .price { font-size: 2rem; }
-  p, .features li, .faq-content { font-size: 0.95rem; } /* Textos de lectura ligeramente más compactos */
+  p, .features li, .faq-content { font-size: 0.95rem; } 
   
   .hero { padding: 2rem 1rem 4rem 1rem; }
   .glass-card { padding: 1.5rem; }
@@ -200,4 +301,14 @@ p { font-size: 1rem; color: var(--text-muted); }
   .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
   .nav-links a { margin-left: 0; }
   .btn-primary { padding: 0.8rem 1.5rem; font-size: 1rem; }
+
+  /* Ajustes del Carrusel y Portafolio en móvil */
+  .carousel-btn { display: none; } /* Ocultamos botones en táctil */
+  .carousel-wrapper::before, .carousel-wrapper::after { width: 40px; } /* Desvanecimiento más corto */
+  .portfolio-container { padding: 1rem 20px 2rem 20px; }
+  .carousel-item { 
+    min-width: 75%; /* Deja ver parte de la siguiente tarjeta */
+    max-width: 280px; 
+  }
+  .portfolio-card-compact .portfolio-info { padding: 1.5rem; } /* Menos relleno interno */
 }

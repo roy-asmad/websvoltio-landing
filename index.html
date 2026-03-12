@@ -92,47 +92,75 @@
     </div>
   </section>
 
-  <section id="portafolio" class="section fade-in">
+<section id="portafolio" class="section fade-in">
     <h2 class="section-title">Nuestro trabajo</h2>
     
-    <div class="portfolio-container">
-      <div class="glass-card flex-row hover-up">
-        <div class="portfolio-img">
-          <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">domain</span>
-        </div>
-        <div class="portfolio-info">
-          <h3>Grupo Asmad</h3>
-          <p>Web corporativa para empresa de ingeniería. Diseño ágil y optimizado para destacar servicios técnicos.</p>
-          <a href="https://grupoasmad.com/" target="_blank" class="btn-outline">
-            Ver Proyecto <span class="material-symbols-outlined">open_in_new</span>
-          </a>
-        </div>
-      </div>
+    <div class="carousel-wrapper">
+      
+      <button class="carousel-btn prev" id="btn-prev" aria-label="Anterior">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button class="carousel-btn next" id="btn-next" aria-label="Siguiente">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
 
-      <div class="glass-card flex-row hover-up">
-        <div class="portfolio-img">
-          <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">devices</span>
+      <div class="portfolio-container" id="portfolio-track">
+        
+        <div class="glass-card portfolio-card-compact carousel-item">
+          <div class="portfolio-img">
+            <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">domain</span>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <h3>Grupo Asmad</h3>
+              <p>Web corporativa para empresa de ingeniería. Diseño ágil y optimizado para destacar servicios técnicos.</p>
+            </div>
+            <a href="https://grupoasmad.com/" target="_blank" class="btn-outline">
+              Ver Proyecto <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+          </div>
         </div>
-        <div class="portfolio-info">
-          <h3>Fluie App</h3>
-          <p>Aplicación web y plataforma de servicios. Interfaz moderna y escalable centrada en la experiencia del usuario final.</p>
-          <a href="#" class="btn-outline" style="border-color: var(--text-muted); color: var(--text-muted); pointer-events: none;">
-            Próximamente <span class="material-symbols-outlined">hourglass_empty</span>
-          </a>
-        </div>
-      </div>
 
-      <div class="glass-card flex-row hover-up">
-        <div class="portfolio-img">
-          <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">dashboard</span>
+        <div class="glass-card portfolio-card-compact carousel-item">
+          <div class="portfolio-img">
+            <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">web</span>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <h3>Plantilla Comercial Uno</h3>
+              <p>Landing page enfocada en conversión directa. Ideal para captar leads rápidos, promocionar un servicio o lanzar un producto.</p>
+            </div>
+            <a href="#" target="_blank" class="btn-outline">
+              Ver Proyecto <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+          </div>
         </div>
-        <div class="portfolio-info">
-          <h3>Fluie Admin</h3>
-          <p>Panel de administración y control a medida. Sistema robusto para la gestión de datos y métricas corporativas en tiempo real.</p>
-          <a href="#" class="btn-outline" style="border-color: var(--text-muted); color: var(--text-muted); pointer-events: none;">
-            Próximamente <span class="material-symbols-outlined">hourglass_empty</span>
-          </a>
+
+        <div class="glass-card portfolio-card-compact carousel-item">
+          <div class="portfolio-img">
+            <span class="material-symbols-outlined" style="font-size: 64px; opacity: 0.5;">devices</span>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <h3>Plantilla Corporativa Dos</h3>
+              <p>Estructura multi-sección para negocios establecidos. Incluye galería interactiva, servicios y formulario de contacto avanzado.</p>
+            </div>
+            <a href="#" target="_blank" class="btn-outline">
+              Ver Proyecto <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+          </div>
         </div>
+
+        <div class="glass-card portfolio-card-compact carousel-item" style="border-style: dashed; border-width: 2px; justify-content: center; text-align: center;">
+          <div class="portfolio-info" style="align-items: center; justify-content: center; padding: 4rem 2rem;">
+            <span class="material-symbols-outlined text-accent" style="font-size: 64px; margin-bottom: 1rem; animation: spin 4s linear infinite;">sync</span>
+            <h3 style="margin-bottom: 1rem;">Cargando nuevos proyectos...</h3>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 400px; margin: 0 auto;">
+              Pronto mostraremos más negocios que hemos conectado a la red.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
