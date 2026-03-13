@@ -319,3 +319,11 @@ p { font-size: 1rem; color: var(--text-muted); }
   }
   .portfolio-card-compact .portfolio-info { padding: 1.5rem; } /* Menos relleno interno */
 }
+
+/* ================= PÁGINAS LEGALES ================= */
+.nav-legal { margin-bottom: 2rem; }
+.logo-link { text-decoration: none; color: var(--text-main); }
+.section-legal { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+.title-legal { text-align: left; margin-bottom: 2rem; }
+.card-legal { text-align: left; }
+.subtitle-legal { margin-top: 1.5rem; color: var(--accent-color); }
