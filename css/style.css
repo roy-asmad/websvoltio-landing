@@ -15,6 +15,7 @@
    ========================================================================== */
 html { 
   scroll-behavior: smooth; 
+  scroll-padding-top: 100px;
 }
 
 * { 
@@ -137,8 +138,8 @@ p {
 
 /* Hero y Features (Conexión) */
 .hero { text-align: center; padding: 4rem 1rem 6rem 1rem; }
-.hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
-.hero p { font-size: 1.15rem; max-width: 600px; margin: 0 auto 3rem auto; }
+.hero h1 { font-size: 3.8rem; max-width: 950px; margin: 0 auto 1.5rem auto; line-height: 1.1; }
+.hero p { font-size: 1.15rem; max-width: 650px; margin: 0 auto 3rem auto; }
 
 .ideal-container { text-align: center; margin-top: 4rem; }
 .ideal-title { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 1rem; text-transform: uppercase; }
@@ -526,4 +527,13 @@ p {
   .mini-web { filter: grayscale(0%) !important; opacity: 1 !important; }
   .author-reveal { max-height: 80px !important; opacity: 1 !important; margin-top: 8px !important; padding-top: 6px !important; border-top: 1px solid rgba(0,0,0,0.1) !important; }
   .portfolio-card-compact .card-info { padding: 1rem 0.8rem; }
+}
+
+/* Ajuste extremo para móviles muy pequeños (ej. iPhone SE) */
+@media (max-width: 400px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero p { font-size: 0.9rem; }
+  .btn-primary { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+  .btn-primary svg { width: 16px; height: 16px; }
+  .ideal-item { font-size: 0.85rem; }
 }
