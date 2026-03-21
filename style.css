@@ -113,23 +113,8 @@ strong{color:#fff; font-weight:600}
 .testimonial-author{font-size: 0.75rem; color: var(--text-dim); margin: 0}
 .portfolio-link-overlay{position: absolute; bottom: 15px; right: 25px; background: transparent; backdrop-filter: none; border-top: none; padding: 0; display: flex; justify-content: flex-end; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none}
 .portfolio-card:hover .portfolio-link-overlay{opacity: 1; transform: translateY(0); pointer-events: auto}
-.portfolio-link {
-    display: inline-flex; 
-    align-items: center; 
-    gap: 6px; 
-    padding: 8px 20px; 
-    border-radius: 100px; 
-    color: var(--celeste); 
-    font-weight: 600; 
-    font-size: 0.9rem; 
-    background: transparent; /* Fondo inicial transparente */
-    transition: var(--transition);
-}
-.portfolio-link:hover {
-    background-color: var(--celeste); /* Efecto de relleno */
-    color: var(--bg) !important; /* El texto cambia a oscuro para contrastar */
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
-}
+.portfolio-link{display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; border-radius: 100px; color: var(--celeste); font-weight: 600; font-size: 0.9rem; background: transparent; transition: var(--transition)}
+.portfolio-link:hover{background-color: var(--celeste); color: var(--bg) !important; box-shadow: 0 0 15px rgba(0, 242, 255, 0.4)}
 .disabled-link{color: var(--text-dim); pointer-events: none}
 .span-2{grid-column: span 2}
 .span-3{grid-column: span 3}
@@ -140,11 +125,7 @@ strong{color:#fff; font-weight:600}
 .service-card, .portfolio-card, .bento-card{transform:translateZ(0)}
 
 /* SECCIONES */
-#hero .hero-logo {
-    justify-content: flex-start;
-    margin-left: 0;
-    margin-right: 0;
-}
+#hero .hero-logo{justify-content: flex-start; margin-left: 0; margin-right: 0}
 #hero{display:flex;align-items:center;justify-content:flex-start;text-align:left;background:radial-gradient(circle at center,#070e2b 0%,var(--bg) 100%);position:relative}
 #hero::before{content:''; position:absolute; inset:0; background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size:40px 40px; opacity:.3; animation:none; will-change: transform}
 #benefits{display:flex;align-items:center}
@@ -181,21 +162,11 @@ strong{color:#fff; font-weight:600}
 .footer-social-links a{color:var(--text-dim); font-size:.9rem; transition:.2s}
 .footer-social-links a:hover{color:var(--celeste)}
 .about-footer strong,
-.why-footer strong {
-    color: var(--celeste);
-    font-weight: 700;
-    display: inline;
-}
+.why-footer strong{color: var(--celeste); font-weight: 700; display: inline}
 .about-footer strong .material-icons,
 .why-footer strong .material-icons,
 .about-footer strong .neon-bolt,
-.why-footer strong .neon-bolt {
-    margin-left: 2px;
-    vertical-align: baseline;
-    position: relative;
-    top: 3px;
-    font-size: 1.2em !important; 
-}
+.why-footer strong .neon-bolt{margin-left: 2px; vertical-align: baseline; position: relative; top: 3px; font-size: 1.2em !important}
 
 /* ANIMACIONES */
 @keyframes moveParticles{from{transform:translate(0,0)}to{transform:translate(40px,40px)}}
@@ -217,99 +188,40 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
 #hero::before{animation: backgroundPulse 8s ease-in-out infinite; transform-origin: center}
 
 /* RESPONSIVE Y ADAPTABILIDAD */
-/* Dispositivos sin hover (Touch) */
 @media (hover: none){
   .testimonial-box{padding-bottom: 12px}
   .portfolio-link-overlay{position: relative; bottom: auto; right: auto; opacity: 1; transform: translateY(0); padding: 15px 0 0 0; background: transparent; justify-content: flex-start; pointer-events: auto}
   #hero::before{animation:none}
   .bolt-icon{animation:none}
 }
-/* Tablets Landscape */
 @media (max-width: 900px){
   .services-grid{grid-template-columns:repeat(2,1fr)}
   .grid-layout{grid-template-columns:1fr}
   #hero::before{animation:moveParticles 40s linear infinite}
 }
-/* Tablets Portrait */
 @media (max-width: 850px){
   .bento-grid{grid-template-columns: repeat(2, 1fr)}
   .span-3{grid-column: span 2}
   .portfolio-grid{grid-template-columns: 1fr}
 }
-/* Teléfonos grandes / Tablets pequeñas */
 @media (max-width: 800px) {
   #hero::before { animation: none; }
-  #contact .hero-logo {
-    justify-content: center;
-    margin: 0 auto 1.5rem auto;
-    width: 100%;
-  }
-  #hero .hero-logo {
-    justify-content: flex-start;
-    margin-left: 0;
-    margin-right: 0;
-    width: auto;
-  }
-  #contact .grid-layout {
-    flex-direction: column;
-    align-items: center; 
-    text-align: center;
-    gap: 30px;
-  }
-  .hero-logo {
-    justify-content: flex-start;
-    margin: 0 0 1.5rem 0;
-    width: auto;
-  }
-  /* Cuerpo del texto */
-  .footer-info {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  /* Redes Sociales centradas */
-  .footer-social-side {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    margin-top: 20px;
-  }
-  .footer-social-links {
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  /* Botón de WhatsApp centrado */
-  #contact .btn-whatsapp {
-    display: inline-flex; /* Asegura que respete el centrado del padre */
-    margin: 20px auto 0 auto;
-    width: fit-content;
-  }
-  /* Copyright y Línea (Flujo natural debajo de todo) */
-  .footer-bottom-info {
-    position: static;
-    width: 100%;
-    margin-top: 40px;
-    padding: 30px 0;
-    border-top: 1px solid var(--border);
-    text-align: center;
-  }
+  #contact .hero-logo{justify-content: center; margin: 0 auto 1.5rem auto; width: 100%}
+  #hero .hero-logo{justify-content: flex-start; margin-left: 0; margin-right: 0; width: auto}
+  #contact .grid-layout{flex-direction: column; align-items: center;  text-align: center; gap: 30px}
+  .hero-logo{justify-content: flex-start;margin: 0 0 1.5rem 0;width: auto}
+  .footer-info{max-width: 100%;margin: 0 auto}
+  .footer-social-side{align-items: center;text-align: center;width: 100%;margin-top: 20px}
+  .footer-social-links{align-items: center;justify-content: center;width: 100%}
+  #contact .btn-whatsapp{display: inline-flex;margin: 20px auto 0 auto;width: fit-content}
+  .footer-bottom-info{position: static; width: 100%; margin-top: 40px; padding: 30px 0; border-top: 1px solid var(--border); text-align: center}
 }
 @media (max-width: 700px){
-  .services-grid, 
-  .bento-grid {
-    grid-template-columns: 1fr; /* Forzamos una sola columna */
-    gap: 15px;
-  }
-  /* Aseguramos que los cards que antes ocupaban varias columnas ahora ocupen solo una */
-  .span-2, 
-  .span-3 {
-    grid-column: span 1 !important;
-    width: 100%;
-  }
-  .bento-card {
-    padding: 25px; /* Un poco más compacto para móviles */
-  }
+  .services-grid, .bento-grid{grid-template-columns: 1fr; gap: 15px}
+  .span-2, .span-3{grid-column: span 1 !important; width: 100%}
+  .bento-card{padding: 25px}
 }
+
 /* TELÉFONOS MÓVILES (Estándar) */
 @media (max-width: 600px){
   section, header, footer{padding: 3rem 1.2rem; min-height:auto}
@@ -317,26 +229,18 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
   h1, .hero-hook{font-size: 2.2rem; letter-spacing: -1px; line-height: 1.2}
   h2{font-size: 1.6rem}
   .bolt-icon{font-size: 3.5rem !important}
-  .center-card, 
-  .center-card p {
-    align-items: flex-start;
-    text-align: left;
-  }
+  .center-card, .center-card p{align-items: flex-start; text-align: left}
   .service-card, .portfolio-card, .bento-card, .about-card { padding: 20px; border-radius: 16px }
   .btn-whatsapp, .btn-secondary, .portfolio-link{padding: 14px 20px; font-size: 1rem; width: 100%; text-align: center}
   .hero-buttons{flex-direction: column; align-items: stretch; gap: 12px}
   #hero{padding-top: 80px; padding-bottom: 80px}
   .span-2{grid-column: span 1}
   .why-footer h3{font-size: 1.1rem; justify-content: center}
-  #index-hero .item-1 { font-size: 14vw; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px}
-  #index-hero .item-2 { font-size: 8vw; margin-bottom: 30px}
-  #index-hero .item-3 { font-size: 6vw}
-  #index-hero .item-4 { font-size: 6.5vw; margin-bottom: 35px}
-  .footer-bottom-info {
-        padding: 20px 1.5rem;
-        position: static;
-        margin-top: 40px;
-    }
+  #index-hero .item-1{font-size: 14vw; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px}
+  #index-hero .item-2{font-size: 8vw; margin-bottom: 30px}
+  #index-hero .item-3{font-size: 6vw}
+  #index-hero .item-4{font-size: 6.5vw; margin-bottom: 35px}
+  .footer-bottom-info{padding: 20px 1.5rem; position: static; margin-top: 40px}
 }
 
 /* PANTALLAS ULTRA COMPACTAS */
