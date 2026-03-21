@@ -82,7 +82,6 @@ strong{color:#fff; font-weight:600}
 .solution-pill{background: var(--bg-card); border: 1px solid var(--border); padding: 15px 25px; border-radius: 100px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1.05rem; color: #fff}
 .solution-pill .info-icon{font-size: 1.5rem !important; margin: 0}
 .about-footer{margin-top: 10px; font-size: 1.5rem; width: 100%}
-.about-footer strong{color: var(--celeste); font-weight: 700; display: inline-flex; align-items: center; gap: 10px}
 .neon-bolt{font-size: 1.8rem !important; color: var(--celeste); margin: 0; filter: drop-shadow(0 0 10px var(--celeste)) drop-shadow(0 0 5px var(--celeste))}
 .section-header{margin-bottom: 2rem; width: 100%; max-width:700px}
 .section-header.center{text-align: center; margin-bottom: 3rem}
@@ -114,28 +113,38 @@ strong{color:#fff; font-weight:600}
 .testimonial-author{font-size: 0.75rem; color: var(--text-dim); margin: 0}
 .portfolio-link-overlay{position: absolute; bottom: 15px; right: 25px; background: transparent; backdrop-filter: none; border-top: none; padding: 0; display: flex; justify-content: flex-end; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none}
 .portfolio-card:hover .portfolio-link-overlay{opacity: 1; transform: translateY(0); pointer-events: auto}
-.portfolio-link{display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:100px; color:var(--celeste); font-weight:600; font-size:0.9rem; transition:var(--transition)}
+.portfolio-link {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    padding: 8px 20px; 
+    border-radius: 100px; 
+    color: var(--celeste); 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+    background: transparent; /* Fondo inicial transparente */
+    transition: var(--transition);
+}
+.portfolio-link:hover {
+    background-color: var(--celeste); /* Efecto de relleno */
+    color: var(--bg) !important; /* El texto cambia a oscuro para contrastar */
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
 .disabled-link{color: var(--text-dim); pointer-events: none}
 .span-2{grid-column: span 2}
 .span-3{grid-column: span 3}
-/* Busca este bloque y déjalo así */
-.center-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-/* Forzamos el centrado del párrafo en la vista general (Desktop) */
-.center-card p {
-  text-align: center;
-  width: 100%;
-}
+.center-card{display: flex; flex-direction: column; align-items: center; text-align: center}
+.center-card p{text-align: center; width: 100%}
 .highlight-card{background: linear-gradient(135deg, rgba(0, 242, 255, 0.05) 0%, var(--bg-card) 100%); border-color: rgba(0, 242, 255, 0.3)}
 .service-card:hover, .portfolio-card:hover, .bento-card:hover{transform:translateY(-6px); border-color:var(--celeste); box-shadow:0 6px 18px rgba(0,0,0,.25)}
 .service-card, .portfolio-card, .bento-card{transform:translateZ(0)}
 
 /* SECCIONES */
+#hero .hero-logo {
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+}
 #hero{display:flex;align-items:center;justify-content:flex-start;text-align:left;background:radial-gradient(circle at center,#070e2b 0%,var(--bg) 100%);position:relative}
 #hero::before{content:''; position:absolute; inset:0; background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size:40px 40px; opacity:.3; animation:none; will-change: transform}
 #benefits{display:flex;align-items:center}
@@ -157,7 +166,6 @@ strong{color:#fff; font-weight:600}
 
 /* PORQUE NOSOTROS */
 .why-footer{text-align: center; font-size: 1.4rem; width: 100%}
-.why-footer strong{color: var(--celeste); font-weight: 700; display: inline-flex; align-items: center; gap: 10px}
 .bento-card .info-icon{font-size: 2rem !important; margin-bottom: 15px; color: var(--celeste)}
 .bento-card h3{font-size: 1.2rem; color: #fff; margin-bottom: 10px}
 .bento-card p{color: var(--text-dim); font-size: 0.95rem; line-height: 1.5; margin: 0}
@@ -167,43 +175,37 @@ strong{color:#fff; font-weight:600}
 /* FOOTER */
 .footer-info{max-width:420px}
 .footer-info p{opacity:.8}
-.footer-bottom-info {
-    position: relative; /* Cambiado de absolute a relative para que fluya bien */
-    width: 100%;
-    margin-top: 80px; /* Espacio generoso entre redes sociales y la línea */
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: .75rem;
-    opacity: .6;
-    clear: both;
-}
-.footer-social-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Alinea los enlaces a la derecha */
-    gap: 6px;
-}
-.footer-social-side {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Alinea todo a la derecha en escritorio */
-    text-align: right;
-    gap: 14px;
-}
+.footer-bottom-info{position: relative; width: 100%; margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border); text-align: center; font-size: .75rem; opacity: .6; clear: both}
+.footer-social-links{display: flex; flex-direction: column; align-items: flex-end; gap: 6px}
+.footer-social-side{display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 14px}
 .footer-social-links a{color:var(--text-dim); font-size:.9rem; transition:.2s}
 .footer-social-links a:hover{color:var(--celeste)}
+.about-footer strong,
+.why-footer strong {
+    color: var(--celeste);
+    font-weight: 700;
+    display: inline;
+}
+.about-footer strong .material-icons,
+.why-footer strong .material-icons,
+.about-footer strong .neon-bolt,
+.why-footer strong .neon-bolt {
+    margin-left: 2px;
+    vertical-align: baseline;
+    position: relative;
+    top: 3px;
+    font-size: 1.2em !important; 
+}
 
 /* ANIMACIONES */
 @keyframes moveParticles{from{transform:translate(0,0)}to{transform:translate(40px,40px)}}
 @keyframes flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.6}}
 @keyframes fadeInUp{0%{opacity: 0; transform: translateY(40px)}100%{opacity: 1; transform: translateY(0)}}
-
 /* Ajuste de scroll para que aparezcan rápido */
 section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear both; animation-timeline: view(); animation-range: entry 10% cover 25%}
 #hero, #index-hero{animation: none}
 
-/* --- ANIMACIONES HERO --- */
+/* ANIMACIONES HERO */
 @keyframes flickerOn{0% { opacity: 0; filter: blur(5px) brightness(0)}10% { opacity: 1; filter: blur(2px) brightness(1)}15% { opacity: 0.4; filter: blur(3px) brightness(0.5)}20% { opacity: 1; filter: blur(0px) brightness(1)}80% { opacity: 0.9}100% { opacity: 1; filter: blur(0px) brightness(1)}}
 @keyframes wakeUpContent{0%{opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px)}100%{opacity: 1; transform: translateY(0) scale(1); filter: blur(0)}}
 @keyframes backgroundPulse{0%, 100%{transform: scale(1); opacity: 0.3}50% { transform: scale(1.05); opacity: 0.4}}
@@ -214,10 +216,7 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
 #hero .hero-buttons{animation: wakeUpContent 1s ease-out both; animation-delay: 1.4s}
 #hero::before{animation: backgroundPulse 8s ease-in-out infinite; transform-origin: center}
 
-/* --------------------------
-   RESPONSIVE Y ADAPTABILIDAD 
---------------------------- */
-
+/* RESPONSIVE Y ADAPTABILIDAD */
 /* Dispositivos sin hover (Touch) */
 @media (hover: none){
   .testimonial-box{padding-bottom: 12px}
@@ -225,46 +224,48 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
   #hero::before{animation:none}
   .bolt-icon{animation:none}
 }
-
 /* Tablets Landscape */
 @media (max-width: 900px){
   .services-grid{grid-template-columns:repeat(2,1fr)}
   .grid-layout{grid-template-columns:1fr}
   #hero::before{animation:moveParticles 40s linear infinite}
 }
-
 /* Tablets Portrait */
 @media (max-width: 850px){
   .bento-grid{grid-template-columns: repeat(2, 1fr)}
   .span-3{grid-column: span 2}
   .portfolio-grid{grid-template-columns: 1fr}
 }
-
 /* Teléfonos grandes / Tablets pequeñas */
 @media (max-width: 800px) {
   #hero::before { animation: none; }
-
-  /* Contenedor principal de contacto/footer */
+  #contact .hero-logo {
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    width: 100%;
+  }
+  #hero .hero-logo {
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+    width: auto;
+  }
   #contact .grid-layout {
     flex-direction: column;
     align-items: center; 
     text-align: center;
     gap: 30px;
   }
-
-  /* Centrado del Logo (Rayo + Texto) */
   .hero-logo {
-    justify-content: center;
-    margin: 0 auto 1.5rem auto;
-    width: 100%;
+    justify-content: flex-start;
+    margin: 0 0 1.5rem 0;
+    width: auto;
   }
-
   /* Cuerpo del texto */
   .footer-info {
     max-width: 100%;
     margin: 0 auto;
   }
-
   /* Redes Sociales centradas */
   .footer-social-side {
     align-items: center;
@@ -272,20 +273,17 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
     width: 100%;
     margin-top: 20px;
   }
-
   .footer-social-links {
     align-items: center;
     justify-content: center;
     width: 100%;
   }
-
   /* Botón de WhatsApp centrado */
   #contact .btn-whatsapp {
     display: inline-flex; /* Asegura que respete el centrado del padre */
     margin: 20px auto 0 auto;
     width: fit-content;
   }
-
   /* Copyright y Línea (Flujo natural debajo de todo) */
   .footer-bottom-info {
     position: static;
@@ -296,79 +294,58 @@ section, .service-card, .portfolio-card, .bento-card{animation: fadeInUp linear 
     text-align: center;
   }
 }
-
 @media (max-width: 700px){
   .services-grid, 
   .bento-grid {
     grid-template-columns: 1fr; /* Forzamos una sola columna */
     gap: 15px;
   }
-
   /* Aseguramos que los cards que antes ocupaban varias columnas ahora ocupen solo una */
   .span-2, 
   .span-3 {
     grid-column: span 1 !important;
     width: 100%;
   }
-
   .bento-card {
     padding: 25px; /* Un poco más compacto para móviles */
   }
 }
-
 /* TELÉFONOS MÓVILES (Estándar) */
 @media (max-width: 600px){
-  /* Reducción de espaciados generales */
   section, header, footer{padding: 3rem 1.2rem; min-height:auto}
   .index-box { padding: 15px 10px }
-  
-  /* Ajustes tipográficos */
   h1, .hero-hook{font-size: 2.2rem; letter-spacing: -1px; line-height: 1.2}
   h2{font-size: 1.6rem}
   .bolt-icon{font-size: 3.5rem !important}
-  
   .center-card, 
   .center-card p {
     align-items: flex-start;
     text-align: left;
   }
-
-  /* Ajuste de tarjetas para que no aprieten el contenido */
   .service-card, .portfolio-card, .bento-card, .about-card { padding: 20px; border-radius: 16px }
-  
-  /* Botones 100% de ancho para mejor click en celular */
   .btn-whatsapp, .btn-secondary, .portfolio-link{padding: 14px 20px; font-size: 1rem; width: 100%; text-align: center}
   .hero-buttons{flex-direction: column; align-items: stretch; gap: 12px}
-  
-  /* Layouts menores */
   #hero{padding-top: 80px; padding-bottom: 80px}
   .span-2{grid-column: span 1}
   .why-footer h3{font-size: 1.1rem; justify-content: center}
-  
-  /* Index secuencial móvil */
   #index-hero .item-1 { font-size: 14vw; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px}
   #index-hero .item-2 { font-size: 8vw; margin-bottom: 30px}
   #index-hero .item-3 { font-size: 6vw}
   #index-hero .item-4 { font-size: 6.5vw; margin-bottom: 35px}
-
-  /* Copyright (Bottom Info) */
   .footer-bottom-info {
         padding: 20px 1.5rem;
-        position: static; /* Evita que se encime si hay mucho contenido */
+        position: static;
         margin-top: 40px;
     }
 }
 
-/* PANTALLAS ULTRA COMPACTAS (Ej. iPhone SE - 320/375px) */
+/* PANTALLAS ULTRA COMPACTAS */
 @media (max-width: 380px){
-  /* Bajamos el font-size base y empaquetamos el contenido */
   h1, .hero-hook{font-size: 1.8rem}
   h2{font-size: 1.4rem}
   .hero-description p{font-size: 1rem}
   .promo-price strong{font-size: 1.6rem}
-  
   section, header, footer{padding: 2.5rem 1rem}
-  
   .btn-whatsapp, .btn-secondary, .portfolio-link{font-size: 0.95rem; padding: 12px 15px}
   .about-footer, .why-footer{font-size: 1.1rem}
   .portfolio-header-flex{flex-direction: column; gap: 8px}
