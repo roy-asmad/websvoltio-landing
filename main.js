@@ -8,90 +8,107 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, { root: null, rootMargin: "-50px 0px", threshold: 0.15 });
-
     document.querySelectorAll(".reveal-3d").forEach(el => observer.observe(el));
 
-    // 2. Power Object (3D Bolt) Dynamic Flight Logic
+    // --- VARIABLES GLOBALES PARA EVENTOS ---
+    const nav = document.getElementById('nav');
+    const hero = document.getElementById('hero');
     const energyBolt = document.querySelector(".energy");
-    const sections = document.querySelectorAll(".screen-section");
+    const sections = Array.from(document.querySelectorAll(".screen-section"));
     const footer = document.getElementById("footer");
 
-    if (energyBolt) {
-        const updateBolt = () => {
-            let active = null, minD = Infinity, cy = window.innerHeight / 2;
-            let activeIndex = 0;
+    // Navegación móvil
+    const btnNext = document.getElementById('nextSection');
+    const btnPrev = document.getElementById('prevSection');
+    const sectionIds = ['hero', 'problem', 'solution', 'phases', 'footer'];
+    const sectionsArr = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
-            // 1. Detección de dispositivo móvil (Ancho menor a 768px)
-            const isMobile = window.innerWidth < 768;
+    // 2. CENTRALIZACIÓN DE EVENTOS SCROLL (Performance Optimizado)
+    let isScrolling = false;
 
-            // Check final de página (Footer) - Sin cambios
-            const isNearBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 100);
+    function onScroll() {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                updateScrollTasks();
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    function updateScrollTasks() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const cy = windowHeight / 2;
+        const isMobile = window.innerWidth < 768;
+
+        // A. Navbar Compacto
+        if (nav && hero) {
+            nav.classList.toggle('nav-compact', scrollY > hero.offsetHeight - 80);
+        }
+
+        // B. Identificar Sección Activa Globalmente
+        let activeIndex = -1;
+        let activeSec = null;
+        let minD = Infinity;
+
+        sections.forEach((sec, index) => {
+            const r = sec.getBoundingClientRect();
+            const d = Math.abs(r.top + r.height / 2 - cy);
+            if (d < minD) { minD = d; activeSec = sec; activeIndex = index; }
+        });
+
+        // C. Lógica del Rayo 3D
+        if (energyBolt) {
+            const isNearBottom = (windowHeight + scrollY) >= (document.documentElement.scrollHeight - 100);
 
             if (isNearBottom && footer) {
                 const logo = footer.querySelector(".logo");
                 if (logo) {
                     const r = logo.getBoundingClientRect();
                     energyBolt.style.transform = `translate3d(${r.left + r.width / 2}px, ${r.top - 60}px, 0) translate(-50%, -50%) scale(0.9) rotate(0deg)`;
-                    energyBolt.classList.remove('energy-mode-danger');
-                    energyBolt.classList.add('energy-mode-standard');
+                    energyBolt.classList.replace('energy-mode-danger', 'energy-mode-standard');
                 }
-                return;
-            }
-
-            // Identificar sección activa
-            sections.forEach((sec, index) => {
-                const r = sec.getBoundingClientRect();
-                const d = Math.abs(r.top + r.height / 2 - cy);
-                if (d < minD) { minD = d; active = sec; activeIndex = index; }
-            });
-
-            if (active) {
-                const txt = active.querySelector("h1, h2");
+            } else if (activeSec) {
+                const txt = activeSec.querySelector("h1, h2");
                 if (txt) {
                     const r = txt.getBoundingClientRect();
+                    const isCenteredAbove = isMobile || activeSec.id === "hero" || activeSec.id === "solution";
 
-                    // --- LÓGICA MÓVIL ACTUALIZADA ---
-                    // Si es móvil, SIEMPRE se centra arriba. Si es PC, solo en Hero y Solución.
-                    const isCenteredAbove = isMobile || active.id === "hero" || active.id === "solution";
-
-                    let xPos, yPos, rotation, scale;
-
-                    if (isCenteredAbove) {
-                        // Posición: Centrado horizontalmente sobre el título
-                        xPos = r.left + (r.width / 2);
-                        // Elevación: Un poco más arriba en móvil para no tapar el texto
-                        yPos = isMobile ? r.top - 60 : r.top - 80;
-                        rotation = 0;
-                        scale = isMobile ? 0.9 : 1.1; // Un poco más pequeño en móvil para que no sea invasivo
-                    } else {
-                        // Comportamiento Lateral (Solo en PC para Problema y Precios)
-                        const isRightSide = activeIndex % 2 !== 0;
-                        xPos = isRightSide ? r.right + 25 : r.left - 45;
-                        yPos = r.top + (r.height / 2);
-                        rotation = isRightSide ? 15 : -15;
-                        scale = 0.85;
-                    }
+                    let xPos = isCenteredAbove ? r.left + (r.width / 2) : (activeIndex % 2 !== 0 ? r.right + 25 : r.left - 45);
+                    let yPos = isCenteredAbove ? (isMobile ? r.top - 60 : r.top - 80) : r.top + (r.height / 2);
+                    let rotation = isCenteredAbove ? 0 : (activeIndex % 2 !== 0 ? 15 : -15);
+                    let scale = isCenteredAbove ? (isMobile ? 0.9 : 1.1) : 0.85;
 
                     energyBolt.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+                }
 
-                    // Cambio de color (Problema = Rojo)
-                    if (active.id === 'problem') {
-                        energyBolt.classList.add('energy-mode-danger');
-                        energyBolt.classList.remove('energy-mode-standard');
-                    } else {
-                        energyBolt.classList.add('energy-mode-standard');
-                        energyBolt.classList.remove('energy-mode-danger');
-                    }
+                // Cambio de color independizado del texto
+                if (activeSec.id === 'problem') {
+                    energyBolt.classList.add('energy-mode-danger');
+                    energyBolt.classList.remove('energy-mode-standard');
+                } else {
+                    energyBolt.classList.add('energy-mode-standard');
+                    energyBolt.classList.remove('energy-mode-danger');
                 }
             }
-        };
+        }
 
-        window.addEventListener("scroll", updateBolt, { passive: true });
-        window.addEventListener("resize", updateBolt, { passive: true });
-        updateBolt();
+        // D. Lógica de Navegación Móvil (Visibilidad)
+        let navCurrentIdx = sectionsArr.findIndex(sec => {
+            const rect = sec.getBoundingClientRect();
+            return rect.top <= cy && rect.bottom >= cy;
+        });
+
+        if (navCurrentIdx !== -1) {
+            btnPrev?.classList.toggle('hidden', navCurrentIdx === 0);
+            btnNext?.classList.toggle('hidden', navCurrentIdx === sectionsArr.length - 1);
+        }
     }
 
-    // 3. Smooth Scrolling
+    // 3. Smooth Scrolling General
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener("click", e => {
             e.preventDefault();
@@ -100,27 +117,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. Parallax Bloom Effect
+    // 4. Parallax Bloom Effect (Optimizado con rAF)
     const blobs = document.querySelectorAll('.blob');
     if (blobs.length === 3) {
+        let mouseTicking = false;
         window.addEventListener('mousemove', e => {
-            const x = (e.clientX - window.innerWidth / 2) / 15, y = (e.clientY - window.innerHeight / 2) / 15;
-            blobs[0].style.transform = `translate3d(${x * 1.2}px, ${y * 1.2}px, 0)`;
-            blobs[1].style.transform = `translate3d(${x * -1.8}px, ${y * -1.8}px, 0)`;
-            blobs[2].style.transform = `translate3d(${x * 2.5}px, ${y * 2.5}px, 0)`;
+            if (!mouseTicking) {
+                window.requestAnimationFrame(() => {
+                    const x = (e.clientX - window.innerWidth / 2) / 15;
+                    const y = (e.clientY - window.innerHeight / 2) / 15;
+                    blobs[0].style.transform = `translate3d(${x * 1.2}px, ${y * 1.2}px, 0)`;
+                    blobs[1].style.transform = `translate3d(${x * -1.8}px, ${y * -1.8}px, 0)`;
+                    blobs[2].style.transform = `translate3d(${x * 2.5}px, ${y * 2.5}px, 0)`;
+                    mouseTicking = false;
+                });
+                mouseTicking = true;
+            }
         }, { passive: true });
     }
 
-    // 5. Navbar Compacto
-    const nav = document.getElementById('nav');
-    const hero = document.getElementById('hero');
-    if (nav && hero) {
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('nav-compact', window.scrollY > hero.offsetHeight - 80);
-        }, { passive: true });
-    }
-
-    // 6. Calculadora de Presupuesto (Versión Profesional)
+    // 5. Calculadora de Presupuesto (Lógica intacta)
     const typeBtns = document.querySelectorAll(".type-btn");
     const budgetInput = document.getElementById("budgetInput");
     const budgetHint = document.getElementById("budgetHint");
@@ -131,50 +147,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("budgetBtn");
 
     const webConfigs = {
-        "1": {
-            t: "Web básica",
-            s: "Ideal para tener presencia en internet.",
-            l: "Tarjeta de presentación digital con información esencial, ubicación y contacto directo.",
-            i: "article",
-            minIdeal: 150, maxIdeal: 350
-        },
-        "2": {
-            t: "Landing interactiva",
-            s: "Perfecta para captar clientes y mensajes.",
-            l: "Diseño de una sola página enfocado en ventas, con botones de acción y optimización para anuncios.",
-            i: "rocket_launch",
-            minIdeal: 250, maxIdeal: 550
-        },
-        "3": {
-            t: "Web completa",
-            s: "Estructura profesional multi-sección.",
-            l: "Estructura robusta con varias secciones, galería de servicios y preparada para posicionarse en Google.",
-            i: "business",
-            minIdeal: 400, maxIdeal: 900
-        }
+        "1": { t: "Web básica", s: "Ideal para tener presencia en internet.", l: "Tarjeta de presentación digital con información esencial, ubicación y contacto directo.", i: "article", minIdeal: 150, maxIdeal: 350 },
+        "2": { t: "Landing interactiva", s: "Perfecta para captar clientes y mensajes.", l: "Diseño de una sola página enfocado en ventas, con botones de acción y optimización para anuncios.", i: "rocket_launch", minIdeal: 250, maxIdeal: 550 },
+        "3": { t: "Web completa", s: "Estructura profesional multi-sección.", l: "Estructura robusta con varias secciones, galería de servicios y preparada para posicionarse en Google.", i: "business", minIdeal: 400, maxIdeal: 900 }
     };
 
     let currentType = "1";
 
     function updateCalculator() {
+        if (!budgetInput) return; // Evita errores si no existe en pantalla
         const config = webConfigs[currentType];
         const budget = parseInt(budgetInput.value) || 0;
 
-        // Actualizar Textos e Icono
         title.textContent = config.t;
         text.textContent = config.s;
         longDesc.textContent = config.l;
         resultIcon.textContent = config.i;
 
-        // --- Lógica de Alerta Visual (NUEVO) ---
         if (budget > 2000) {
             budgetInput.classList.add("input-danger");
             budgetHint.textContent = "Para proyectos mayores a S/ 2000, solicite una asesoría personalizada.";
             budgetHint.style.color = "#ff4d4d";
         } else {
             budgetInput.classList.remove("input-danger");
-
-            // Validación de Rangos Estándar
             if (budget < 150) {
                 budgetHint.textContent = "El monto mínimo de inversión es S/ 150.";
                 budgetHint.style.color = "#ff4d4d";
@@ -186,13 +181,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 budgetHint.style.color = "#00ffd0";
             }
         }
-
-        // Actualizar enlace de WhatsApp
-        const message = `Hola WebsVoltio, me interesa una ${config.t}. Mi presupuesto estimado es de S/ ${budget}.`;
-        btn.href = `https://wa.me/51970597061?text=${encodeURIComponent(message)}`;
+        btn.href = `https://wa.me/51970597061?text=${encodeURIComponent(`Hola WebsVoltio, me interesa una ${config.t}. Mi presupuesto estimado es de S/ ${budget}.`)}`;
     }
 
-    // Eventos
     typeBtns.forEach(b => {
         b.addEventListener("click", () => {
             typeBtns.forEach(btn => btn.classList.remove("active"));
@@ -202,81 +193,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    budgetInput.addEventListener("input", updateCalculator);
+    budgetInput?.addEventListener("input", updateCalculator);
 
-    // Inicializar al cargar
-    updateCalculator();
-
-    // 7. Marquee
-    const marquee = document.querySelector('.trust-marquee');
-    if (marquee) {
-        const group = marquee.querySelector('.marquee-group');
-        marquee.appendChild(group.cloneNode(true));
-    }
-
-    // Navegación Secuencial Robusta
-    const btnNext = document.getElementById('nextSection');
-    const btnPrev = document.getElementById('prevSection');
-    const sectionIds = ['hero', 'problem', 'solution', 'phases', 'footer'];
-
-    function updateNavVisibility() {
-        const scrollPos = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const sectionsArr = sectionIds.map(id => document.getElementById(id));
-
-        // Encontrar índice de la sección que ocupa la mayor parte de la pantalla
-        let currentIdx = sectionsArr.findIndex(sec => {
-            if (!sec) return false;
-            const rect = sec.getBoundingClientRect();
-            return rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2;
-        });
-
-        if (currentIdx === -1) return;
-
-        // Ocultar flecha arriba en la primera sección
-        if (currentIdx === 0) {
-            btnPrev?.classList.add('hidden');
-        } else {
-            btnPrev?.classList.remove('hidden');
-        }
-
-        // Ocultar flecha abajo en la última sección
-        if (currentIdx === sectionIds.length - 1) {
-            btnNext?.classList.add('hidden');
-        } else {
-            btnNext?.classList.remove('hidden');
-        }
-    }
-
+    // 6. Navegación por flechas (Acciones de clic)
     function navigate(direction) {
-        const sectionsArr = sectionIds.map(id => document.getElementById(id));
         const windowHeight = window.innerHeight;
-
-        // Encontrar dónde estamos ahora
         let currentIdx = sectionsArr.findIndex(sec => {
             const rect = sec.getBoundingClientRect();
             return rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2;
         });
 
         let targetIdx = direction === 'next' ? currentIdx + 1 : currentIdx - 1;
-
-        // Validar límites
         if (targetIdx >= 0 && targetIdx < sectionsArr.length) {
             const targetSec = sectionsArr[targetIdx];
-            if (targetSec) {
-                // El offset de -60 es para no quedar tapado por el navbar
-                window.scrollTo({
-                    top: targetSec.offsetTop - 60,
-                    behavior: 'smooth'
-                });
-            }
+            if (targetSec) window.scrollTo({ top: targetSec.offsetTop - 60, behavior: 'smooth' });
         }
     }
 
     btnNext?.addEventListener('click', () => navigate('next'));
     btnPrev?.addEventListener('click', () => navigate('prev'));
-    window.addEventListener('scroll', updateNavVisibility, { passive: true });
 
-    // Ejecutar una vez al cargar
-    updateNavVisibility();
+    // 7. Marquee Bucle
+    const marquee = document.querySelector('.trust-marquee');
+    if (marquee) {
+        const group = marquee.querySelector('.marquee-group');
+        marquee.appendChild(group.cloneNode(true));
+    }
+
+    // Inicializaciones
+    updateScrollTasks();
+    updateCalculator();
 });
